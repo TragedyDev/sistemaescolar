@@ -15,7 +15,7 @@ include ('../../app/controllers/roles/datos_rol.php');
     <div class="content">
         <div class="container">
             <div class="row">
-                <h1>Editar el rol: <?=$nombre_rol;?></h1>
+                <h1>Editar Función: <?=$nombre_rol;?></h1>
             </div>
             <br>
             <div class="row">
@@ -29,7 +29,7 @@ include ('../../app/controllers/roles/datos_rol.php');
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">Nombre del rol</label>
+                                            <label for="">Función</label>
                                             <input type="text" name="id_rol" value="<?=$id_rol;?>" hidden>
                                             <input type="text" class="form-control" name="nombre_rol" value="<?=$nombre_rol;?>">
                                         </div>

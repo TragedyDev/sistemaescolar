@@ -9,7 +9,7 @@ if(isset($_SESSION['sesion_email'])){
 
    $datos_sesion_usuarios = $query_sesion->fetchAll(PDO::FETCH_ASSOC);
    foreach ($datos_sesion_usuarios as $datos_sesion_usuario){
-      $nombre_sesion_usuario = $datos_sesion_usuario['nombres'];
+      $nombre_sesion_usuario = $datos_sesion_usuario['email'];
    }
 }else{
    echo "el usuario no paso por el login";
@@ -125,11 +125,84 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+
+               <li class="nav-item">
+            <a href="#" class="nav-link active">
+            <i class="nav-icon fas"><i class="bi bi-gear-fill"></i></i>
+              <p>
+                Configuraciones
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?=APP_URL;?>/admin/configuraciones" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Opciones</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+            <i class="nav-icon fas"><i class="bi bi-card-list"></i></i>
+              <p>
+                Niveles
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?=APP_URL;?>/admin/niveles" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de Niveles</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+            <i class="nav-icon fas"><i class="bi bi-bar-chart-steps"></i></i>
+              <p>
+                Grados
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?=APP_URL;?>/admin/grados" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de Grados</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+            <i class="nav-icon fas"><i class="bi bi-journal-bookmark"></i></i>
+              <p>
+                Materias
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?=APP_URL;?>/admin/materias" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de Materias</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <li class="nav-item">
             <a href="#" class="nav-link active">
             <i class="nav-icon fas"><i class="bi bi-bookmarks"></i></i>
               <p>
-                Roles
+                Funciones
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -137,7 +210,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
                 <a href="<?=APP_URL;?>/admin/roles" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de Roles</p>
+                  <p>Listado de Funciones</p>
                 </a>
               </li>
             </ul>
@@ -160,9 +233,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+            <i class="nav-icon fas"><i class="bi bi-person-workspace"></i></i>
+              <p>
+                 Administrativos
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?=APP_URL;?>/admin/administrativos" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de Administrativos</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+            <i class="nav-icon fas"><i class="bi bi-person-lines-fill"></i></i>
+              <p>
+                 Docentes
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?=APP_URL;?>/admin/docentes" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de Docentes</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           
-
-
 
           <li class="nav-item">
             <a href="<?=APP_URL;?>/login/logout.php" class="nav-link" style="background-color: red">

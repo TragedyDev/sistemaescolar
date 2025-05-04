@@ -12,7 +12,7 @@ include ('../../app/controllers/roles/listado_roles.php');
     <div class="content">
         <div class="container">
             <div class="row">
-                <h1>Listado de roles</h1>
+                <h1>Listado de Funciones</h1>
             </div>
             <br>
             <div class="row">
@@ -20,17 +20,17 @@ include ('../../app/controllers/roles/listado_roles.php');
                 <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Roles registrados</h3>
+                            <h3 class="card-title">Funciones Registradas</h3>
                             <div class="card-tools">
-                                <a href="create.php" class="btn btn-primary"><i class="bi bi-plus-square"></i> Crear nuevo rol</a>
+                                <a href="create.php" class="btn btn-primary"><i class="bi bi-plus-square"></i> Crear Funcion</a>
                             </div>
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-striped table-bordered table-hover table-sm">
-                                <thead>
+                                <thead> 
                                 <tr>
                                     <th><center>Nro</center></th>
-                                    <th><center>Nombre del rol</center></th>
+                                    <th><center>Funcion</center></th>
                                     <th><center>Acciones</center></th>
                                 </tr>
                                 </thead>
@@ -43,7 +43,7 @@ include ('../../app/controllers/roles/listado_roles.php');
                             ?>
                             <tr>
                               <td style="text-align: center"><?=$contador_rol;?></td>
-                              <td><?=$role['nombre_rol'];?></td>
+                              <td style="text-align: center"><?=$role['nombre_rol'];?></td>
                               <td style="text-align: center">
                               <div class="btn-group" role="group" aria-label="Basic example">
                               <a href="show.php?id=<?=$id_rol;?>" type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>

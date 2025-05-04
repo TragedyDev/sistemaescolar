@@ -11,7 +11,7 @@ include ('../../admin/layout/parte1.php');
     <div class="content">
         <div class="container">
             <div class="row">
-                <h1>Registro de Rol</h1>
+                <h1>Registro de Función</h1>
             </div>
             <br>
             <div class="row">
@@ -26,7 +26,7 @@ include ('../../admin/layout/parte1.php');
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">Nombre del rol</label>
+                                            <label for="">Función</label>
                                             <input type="text" name="nombre_rol" class="form-control" required>
                                         </div>
                                     </div>

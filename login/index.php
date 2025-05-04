@@ -5,9 +5,11 @@ include ('../app/config.php');
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="stylesheet" href="style.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?=APP_NAME;?></title>
+
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,12 +21,13 @@ include ('../app/config.php');
   <link rel="stylesheet" href="<?=APP_URL;?>/public/dist/css/adminlte.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="hold-transition login-page">
+<body style="background-image: url('../public/dist/img/logo.jpg'); background-size: cover;" class="hold-transition login-page">
 <div class="login-box">
-    <center>
-    <img src="https://img.freepik.com/vector-gratis/ilustracion-concepto-inicio-sesion_114360-739.jpg?t=st=1742674114~exp=1742677714~hmac=d025b8406a76ffe89113e5c0253f7befb2b9b40271ff5129cc308705c21833e6&w=740"
-    width= "150px" alt=""><br><br>
-    </center>
+<center>
+        <br>
+        <img src="https://img.freepik.com/vector-gratis/concepto-abstracto-sistema-control-acceso_335657-3180.jpg?w=740&t=st=1703808543~exp=1703809143~hmac=6740d576ffcb74ef090f90d076b9e9e2b4f5641df33d2164c8577b0e5829c127"
+             width="150px" alt=""><br><br>
+</center>
   <div class="login-logo">
     <h3 href=><b><?=APP_NAME;?></b></h3>
   </div>
@@ -35,7 +38,7 @@ include ('../app/config.php');
 
       <form action="controller_login.php" method="post">
         <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" placeholder="Email">
+          <input type="email" name="email" class="form-control" placeholder="Correo">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -43,7 +46,7 @@ include ('../app/config.php');
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name= "password" class="form-control" placeholder="Password">
+          <input type="password" name= "password" class="form-control" placeholder="Contraseña">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
