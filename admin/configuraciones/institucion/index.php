@@ -12,7 +12,7 @@ include('../../../app/controllers/configuraciones/institucion/listado_institucio
     <div class="content">
         <div class="container">
             <div class="row">
-                <h1>Listado de Instituciones</h1>
+                <h1>Datos de la Institucion</h1>
             </div>
             <br>
             <div class="row">
@@ -20,9 +20,9 @@ include('../../../app/controllers/configuraciones/institucion/listado_institucio
                 <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Instituciones Registrados</h3>
+                            <h3 class="card-title">Institucion</h3>
                             <div class="card-tools">
-                                <a href="create.php" class="btn btn-primary"><i class="bi bi-plus-square"></i> Crear nueva Institucion</a>
+                            <!--    <a href="create.php" class="btn btn-primary"><i class="bi bi-plus-square"></i> Crear nueva Institucion</a>-->
                             </div>
                         </div>
                         <div class="card-body">
@@ -37,7 +37,6 @@ include('../../../app/controllers/configuraciones/institucion/listado_institucio
                                     <th><center>Celular</center></th>
                                     <th><center>Correo</center></th>
                                     <th><center>Fecha de Creacion</center></th>
-                                    <th><center>Estado</center></th>
                                     <th><center>Acciones</center></th>
                                 </tr>
                                 </thead>
@@ -58,7 +57,6 @@ include('../../../app/controllers/configuraciones/institucion/listado_institucio
                                         <td><?=$institucione['celular'];?></td>
                                         <td><?=$institucione['correo'];?></td>
                                         <td><?=$institucione['fyh_creacion'];?></td>
-                                        <td><?=$institucione['estado'];?></td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <a href="show.php?id=<?=$id_config_institucion;?>" type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>

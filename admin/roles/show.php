@@ -29,7 +29,7 @@ include ('../../app/controllers/roles/datos_rol.php');
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">Nombre del rol</label>
+                                            <label for="">Función</label>
                                             <p><?=$nombre_rol;?></p>
                                         </div>
                                     </div>

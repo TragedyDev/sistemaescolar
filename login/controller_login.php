@@ -24,6 +24,7 @@ if( ($contador>0) && (password_verify($password,$password_tabla)) ){
     $_SESSION['mensaje'] = "Bienvenido al sistema";
     $_SESSION['icono'] = "success";
     $_SESSION['sesion_email'] = $email;
+    setcookie('user', $email, time() + (86400 * 30));
     header('Location:'.APP_URL."/admin");
 }
 else{

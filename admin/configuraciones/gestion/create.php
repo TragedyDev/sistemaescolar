@@ -1,3 +1,4 @@
+
 <?php
 include ('../../../app/config.php');
 include ('../../../admin/layout/parte1.php');
@@ -66,3 +67,4 @@ include ('../../../admin/layout/parte2.php');
 include ('../../../layout/mensajes.php');
 
 ?>
+

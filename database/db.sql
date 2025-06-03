@@ -86,30 +86,62 @@ CREATE TABLE docentes (
 )ENGINE=InnoDB;
 
 CREATE TABLE estudiantes (
+    id_estudiante INT PRIMARY KEY AUTO_INCREMENT,
+    apellidos VARCHAR(100) NOT NULL,
+    nombres VARCHAR(100) NOT NULL,
+    cedula_escolar VARCHAR(20) NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    lugar_nacimiento VARCHAR(100),
+    estado VARCHAR(50),
+    edad INT,
+    sexo CHAR(1),
+    talla_camisa VARCHAR(10),
+    talla_pantalon VARCHAR(10),
+    talla_zapatos VARCHAR(10),
+    peso DECIMAL(5,2),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado_registro VARCHAR(11),
+    
+    persona_id  INT (11) NOT NULL,
+    nivel_id    INT (11) NOT NULL,
+    grado_id    INT (11) NOT NULL,
+    
+    FOREIGN KEY (persona_id) REFERENCES personas (id_persona) ON DELETE NO ACTION ON UPDATE CASCADE,
+    FOREIGN KEY (nivel_id) REFERENCES niveles (id_nivel) ON DELETE NO ACTION ON UPDATE CASCADE,
+    FOREIGN KEY (grado_id) REFERENCES grados (id_grado) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
-  id_estudiante             INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  persona_id             INT (11) NOT NULL,
+CREATE TABLE representantes (
+    id_representante INT PRIMARY KEY AUTO_INCREMENT,
+    id_estudiante INT NOT NULL,
 
-  fyh_creacion   DATETIME NULL,
-  fyh_actualizacion DATETIME NULL,
-  estado        VARCHAR (11),
+    apellidos_nombres_madre VARCHAR(200),
+    apellidos_nombres_padre VARCHAR(200),
+    ci VARCHAR(20) NOT NULL,
+    parentesco VARCHAR(50) NOT NULL,
+    fecha_nacimiento DATE,
+    ocupacion VARCHAR(100),
 
-  FOREIGN KEY (persona_id) REFERENCES personas (id_persona) on delete no action on update cascade
+    lugar_trabajo VARCHAR(200),
+    direccion_trabajo TEXT,
 
-)ENGINE=InnoDB;
+    celular VARCHAR(20),
+    correo VARCHAR(100),
+    direccion TEXT,
 
-CREATE TABLE ppffs (
+    numero_hijos INT DEFAULT 1,
+    numero_hijos_estudiando INT DEFAULT 1,
+    numero_hijos_estudiando_plantel INT DEFAULT 1,
 
-  id_ppff             INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  persona_id          INT (11) NOT NULL,
+    fyh_creacion DATETIME NULL,
+    fyh_actualizacion DATETIME NULL,
+    estado VARCHAR(11),
 
-  fyh_creacion   DATETIME NULL,
-  fyh_actualizacion DATETIME NULL,
-  estado        VARCHAR (11),
-
-  FOREIGN KEY (persona_id) REFERENCES personas (id_persona) on delete no action on update cascade
-
-)ENGINE=InnoDB;
+    FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
 CREATE TABLE configuracion_instituciones (
 

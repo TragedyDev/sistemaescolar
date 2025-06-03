@@ -4,13 +4,21 @@ session_start();
 if(isset($_SESSION['sesion_email'])){
   // echo "el usuarios paso por el login";
    $email_sesion = $_SESSION['sesion_email'];
-   $query_sesion = $pdo->prepare("SELECT * FROM usuarios WHERE email = '$email_sesion' AND estado = '1' ");
+   $query_sesion = $pdo->prepare("SELECT * FROM usuarios as usu
+                        INNER JOIN roles as rol ON rol.id_rol = usu.rol_id
+                        INNER JOIN personas as per ON per.usuario_id = usu.id_usuario
+                        WHERE usu.email = '$email_sesion' AND usu.estado = '1' ");
    $query_sesion->execute();
 
    $datos_sesion_usuarios = $query_sesion->fetchAll(PDO::FETCH_ASSOC);
    foreach ($datos_sesion_usuarios as $datos_sesion_usuario){
       $nombre_sesion_usuario = $datos_sesion_usuario['email'];
+      $rol_sesion_usuario = $datos_sesion_usuario['nombre_rol'];
+      $nombres_sesion_usuario = $datos_sesion_usuario['nombres'];
+      $apellidos_sesion_usuario = $datos_sesion_usuario['apellidos'];
+      $ci_sesion_usuario = $datos_sesion_usuario['ci'];
    }
+   
 }else{
    echo "el usuario no paso por el login";
    header('Location:'.APP_URL."/login");
@@ -100,7 +108,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="position: fixed; height: 100vh;">>
     <!-- Brand Logo -->
     <a href="<?=APP_URL;?>/admin" class="brand-link">
       <img src="https://png.pngtree.com/png-clipart/20220628/original/pngtree-school-lineal-icon-back-to-vecto-illustration-png-image_8240081.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -128,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                <li class="nav-item">
             <a href="#" class="nav-link active">
-            <i class="nav-icon fas"><i class="bi bi-gear-fill"></i></i>
+            <i class="nav-icon fas"><i class="bi bi-card-list"></i></i>
               <p>
                 Configuraciones
                 <i class="right fas fa-angle-left"></i>
@@ -269,23 +277,65 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
-          
 
           <li class="nav-item">
-            <a href="<?=APP_URL;?>/login/logout.php" class="nav-link" style="background-color: red">
-              <i class="nav-icon fas"><i class="bi bi-door-open"></i></i>
+            <a href="#" class="nav-link active">
+            <i class="nav-icon fas"><i class="bi bi-person-badge"></i></i>
               <p>
-                 Cerrar Sesión
+                 Estudiantes
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="<?=APP_URL;?>/admin/inscripciones" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Inscripción</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?=APP_URL;?>/admin/estudiantes" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de Estudiantes</p>
+                </a>
+              </li>
+            </ul>
           </li>
-
-
+          
 
         </ul>
-      </nav>
+                <div class="nav-footer" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 10px; background-color: #343a40;">
+        <a href="<?=APP_URL;?>/login/logout.php" onclick="confirmarCerrarSesion(event)" class="nav-link btn btn-danger btn-block">
+            <i class="nav-icon fas"><i class="bi bi-door-open"></i></i>
+            <p style="display: inline;">Cerrar Sesión</p>
+                     <script>
+    function confirmarCerrarSesion(event) {
+        event.preventDefault(); // Previene la acción por defecto del enlace/botón
+        Swal.fire({
+            title: 'Cerrar sesión',
+            text: '¿Estás seguro que deseas cerrar tu sesión?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#a5161d',
+            cancelButtonColor: '#270a0a',
+            confirmButtonText: 'Sí, cerrar sesión',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir al logout o enviar formulario
+                window.location.href = "<?=APP_URL;?>/login/logout.php"// Si es un enlace
+                // O si es un formulario: document.getElementById('logout-form').submit();
+            }
+        });
+    }
+</script>
+            </a>
+          </div>
+          </nav>
+      
       <!-- /.sidebar-menu -->
     </div>
 
     <!-- /.sidebar -->
+     
   </aside>

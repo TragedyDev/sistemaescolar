@@ -11,3 +11,4 @@ if (isset($_SESSION['sesion_email'])) {
     header('Location: '.APP_URL.'/login');
     exit;
 }
+?>

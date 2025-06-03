@@ -1,12 +1,20 @@
+
 <!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
+ <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
     <div class="p-3">
-        <h5>Title</h5>
-        <p>Sidebar content</p>
+        <li class="nav-item">
+            <a href="<?=APP_URL;?>/login/logout.php" onclick="confirmarCerrarSesion(event)" class="nav-link" style="background-color: red">
+              <i class="nav-icon fas"><i class="bi bi-door-open"></i></i>
+              <p>
+                 Cerrar Sesión
+              </p>
+            </a>
+          </li>
     </div>
 </aside>
 <!-- /.control-sidebar -->
+ 
 
 <!-- Main Footer -->
 <footer class="main-footer">
@@ -15,7 +23,8 @@
         V. 1.0.
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; <?=$ano_actual;?> <a href="https://hilariweb.com">Tragedy Web</a>.</strong> Todos los derechos Reservados.
+    <strong>Copyright &copy; <?=$ano_actual;?> <a href=""></a>.</strong> Todos los derechos Reservados.
+    <p xmlns:cc="http://creativecommons.org/ns#" >Este proyecto está realizado bajo fines Educativos y no está a la venta. <a href="https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""></a></p>
 </footer>
 </div>
 

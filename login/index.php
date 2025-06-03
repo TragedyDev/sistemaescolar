@@ -25,8 +25,8 @@ include ('../app/config.php');
 <div class="login-box">
 <center>
         <br>
-        <img src="https://img.freepik.com/vector-gratis/concepto-abstracto-sistema-control-acceso_335657-3180.jpg?w=740&t=st=1703808543~exp=1703809143~hmac=6740d576ffcb74ef090f90d076b9e9e2b4f5641df33d2164c8577b0e5829c127"
-             width="150px" alt=""><br><br>
+        <img src="../public/img/logoescuela.jpg"
+             width="200px" alt=""><br><br>
 </center>
   <div class="login-logo">
     <h3 href=><b><?=APP_NAME;?></b></h3>
@@ -55,7 +55,7 @@ include ('../app/config.php');
         </div>
         <hr>
         <div class="input-group mb-3">
-          <button class="btn btn-success btn-block" type="submit">Ingresar</button>
+          <button class="btn btn-primary btn-block" type="submit">Ingresar</button>
         </div>
       </form>
 

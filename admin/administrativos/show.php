@@ -28,7 +28,7 @@ include ('../../app/controllers/administrativos/datos_administrativos.php');
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="">Nombre del Rol</label>
+                                            <label for="">Función</label>
                                             <div class="form-inline">
                                                 <p><?=$nombre_rol;?></p>
                                             </div>
