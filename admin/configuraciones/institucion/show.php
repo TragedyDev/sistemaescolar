@@ -82,7 +82,7 @@ include ('../../../app/controllers/configuraciones/institucion/datos_institucion
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <a href="<?=APP_URL;?>/admin/configuraciones/institucion" class="btn btn-secondary">Volver</a>
+                                            <a href="<?=APP_URL;?>/admin/configuraciones/Institucion/" class="btn btn-secondary">Volver</a>
                                         </div>
                                     </div>
                                 </div>

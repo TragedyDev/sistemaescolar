@@ -1,6 +1,13 @@
 <?php
 include ('../app/config.php');
-?>
+
+
+if(isset($_GET['timeout'])) {    
+    session_start();  
+    $_SESSION['mensaje'] = "Tu sesión expiró por inactividad. Por favor, inicia sesión nuevamente.";    
+    $_SESSION['icono'] = "warning";    
+}  
+?> 
 
 <!DOCTYPE html>
 <html lang="es">

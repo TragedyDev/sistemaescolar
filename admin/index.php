@@ -25,7 +25,7 @@ include ('../app/controllers/estudiantes/listado_estudiantes.php');
           <h1><?=APP_NAME;?></h1>
           </div>
           <BR>
-          <!-- Vista del Estudiante -->
+         
           <?php
           if($rol_sesion_usuario == "ESTUDIANTE"){ 
             foreach ($estudiantes as $estudiante) {
@@ -98,13 +98,92 @@ include ('../app/controllers/estudiantes/listado_estudiantes.php');
               </div>
               
           <?php
-          }
+          } else if($rol_sesion_usuario == "DOCENTE"){ 
+            foreach ($docentes as $docente) {
+              if($email_sesion == $docente['email']) {
+                $nombre_rol = $docente['nombre_rol'];
+                $especialidad = $docente['especialidad'];
+                $antiguedad = $docente['antiguedad'];
+                $email = $docente['email'];
+              }
+            }
+            ?>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card card-outline card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Datos del Docente</h3>
+                        </div>
+                        <div class="card-body">
+                        <table class="table table-sm table-hover table-striped table-bordered">
+                <tr>
+                  <td><b>Nombres y Apellidos: </b></td>
+                  <td><?=$nombres_sesion_usuario ." ".$apellidos_sesion_usuario;?></td>
+                </tr>
+                <tr>
+                  <td><b>Cédula: </b></td>
+                  <td><?=$ci_sesion_usuario;?></td>
+                </tr>
+                <tr>
+                  <td><b>Especialidad: </b></td>
+                  <td><?=$especialidad;?></td>
+                </tr>
+                <tr>
+                  <td><b>Antiguedad: </b></td>
+                  <td><?=$antiguedad;?></td>
+                </tr>
+                <tr>
+                  <td><b>Correo: </b></td>
+                  <td><?=$email;?></td>
+                </tr>
+              </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+              
+          <?php
+          }else{
+            $sql_datos = "SELECT * FROM usuarios as usu 
+            INNER JOIN roles as rol ON rol.id_rol = usu.rol_id 
+            INNER JOIN personas as per ON per.usuario_id = usu.id_usuario 
+            where usu.estado = '1' and usu.email = '$email_sesion'";
+            $query_datos = $pdo->prepare($sql_datos);
+            $query_datos->execute();
+            $datos = $query_datos->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($datos as $dato) {
+              $nombre_rol = $dato['nombre_rol']; 
+            }
+            ?>
+            <div class="row">
+                <div class="col-md-6">
+                  <div class="card card-outline card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Datos del Usuario</h3>
+                        </div>
+                        <div class="card-body">
+                        <table class="table table-sm table-hover table-striped table-bordered">
+                <tr>
+                  <td><b>Nombres y Apellidos: </b></td>
+                  <td><?=$nombres_sesion_usuario ." ".$apellidos_sesion_usuario;?></td>
+                </tr>
+                <tr>
+                  <td><b>Función: </b></td>
+                  <td><?=$nombre_rol;?></td>
+                </tr>
+              </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+          <?php
+          } 
           ?>
-          <!-- Vista del Estudiante -->
+
 
           <!-- Vista del administrador -->
            <?php
-          if($rol_sesion_usuario == "ADMINISTRADOR"){ ?>
+          if($rol_sesion_usuario == "ADMINISTRADOR" || ($rol_sesion_usuario == "DIRECTORA" || ($rol_sesion_usuario == "COORDINADORA PEDAGÓGICA"))){ ?>
             <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small card -->

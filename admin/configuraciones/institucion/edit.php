@@ -24,7 +24,7 @@ include ('../../../app/controllers/configuraciones/institucion/datos_institucion
                             <h3 class="card-title">Llene los datos</h3>
                         </div>
                         <div class="card-body">
-                            <form action="<?=APP_URL;?>/app/controllers/configuraciones/institucion/update.php" method="post" enctype="multipart/form-data">
+                            <form action="<?=APP_URL;?>/app/controllers/configuraciones/Institucion/update.php" method="post" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="row">
@@ -87,7 +87,7 @@ include ('../../../app/controllers/configuraciones/institucion/datos_institucion
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-success">Actualizar</button>
-                                            <a href="<?=APP_URL;?>/admin/configuraciones/institucion" class="btn btn-secondary">Volver</a>
+                                            <a href="<?=APP_URL;?>/admin/configuraciones/Institucion" class="btn btn-secondary">Volver</a>
                                         </div>
                                     </div>
                                 </div>

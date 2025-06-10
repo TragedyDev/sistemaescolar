@@ -26,6 +26,9 @@ if( ($contador>0) && (password_verify($password,$password_tabla)) ){
     $_SESSION['sesion_email'] = $email;
     setcookie('user', $email, time() + (86400 * 30));
     header('Location:'.APP_URL."/admin");
+
+    $_SESSION['last_activity'] = time();  
+    $_SESSION['timeout_duration'] = 1800; // 30 minutos en segundos
 }
 else{
     echo "los datos son incorrectos";

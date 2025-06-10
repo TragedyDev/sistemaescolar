@@ -2,6 +2,17 @@
 session_start();
 
 if(isset($_SESSION['sesion_email'])){
+  // Verificar timeout de inactividad  
+if (isset($_SESSION['last_activity'])) {  
+    $inactive_time = time() - $_SESSION['last_activity'];  
+    if ($inactive_time > $_SESSION['timeout_duration']) {  
+        session_destroy();  
+        header('Location:'.APP_URL."/login?timeout=1");  
+        exit;  
+    }  
+}  
+// Actualizar tiempo de última actividad  
+$_SESSION['last_activity'] = time();
   // echo "el usuarios paso por el login";
    $email_sesion = $_SESSION['sesion_email'];
    $query_sesion = $pdo->prepare("SELECT * FROM usuarios as usu
@@ -13,23 +24,50 @@ if(isset($_SESSION['sesion_email'])){
    $datos_sesion_usuarios = $query_sesion->fetchAll(PDO::FETCH_ASSOC);
    foreach ($datos_sesion_usuarios as $datos_sesion_usuario){
       $nombre_sesion_usuario = $datos_sesion_usuario['email'];
+      $id_rol_sesion_usuario = $datos_sesion_usuario['id_rol'];
       $rol_sesion_usuario = $datos_sesion_usuario['nombre_rol'];
       $nombres_sesion_usuario = $datos_sesion_usuario['nombres'];
       $apellidos_sesion_usuario = $datos_sesion_usuario['apellidos'];
       $ci_sesion_usuario = $datos_sesion_usuario['ci'];
    }
+
+   $url = $_SERVER["PHP_SELF"];
+   $conta = strlen($url);
+   $rest = substr($url, 15, $conta);
+
+    $sql_roles_permisos = "SELECT * FROM roles_permisos as rolper
+                        INNER JOIN permisos as per ON per.id_permiso = rolper.permiso_id
+                        INNER JOIN roles as rol ON rol.id_rol = rolper.rol_id
+                         where rolper.estado = '1'";
+    $query_roles_permisos = $pdo->prepare($sql_roles_permisos);
+    $query_roles_permisos->execute();
+    $roles_permisos = $query_roles_permisos->fetchAll(PDO::FETCH_ASSOC);
+    $contadorpermiso = 0;
+    foreach ($roles_permisos as $roles_permiso){
+      if($id_rol_sesion_usuario == $roles_permiso['rol_id']) {
+        // echo $roles_permiso['url'];
+        if ($rest == $roles_permiso['url']){
+         // echo "Permiso Concedido - ";
+          $contadorpermiso = $contadorpermiso + 1;
+        }else {
+         // echo "No está autorizado";
+        }
+      } 
+    }
+    if($contadorpermiso>0){
+     // echo "Autorizado";
+    }else{
+     // echo "No autorizado";
+      header('Location:'.APP_URL."/admin/no-autorizado.php");
+    }
    
-}else{
-   echo "el usuario no paso por el login";
-   header('Location:'.APP_URL."/login");
-}
-?>
+  }else{
+    echo "el usuario no paso por el login";
+    header('Location:'.APP_URL."/login");
+  }
+  ?>
 
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -39,10 +77,78 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="<?=APP_URL;?>public/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?=APP_URL;?>public/dist/css/adminlte.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>  
+let inactivityTimer;  
+let warningTimer;  
+const TIMEOUT_DURATION = 30 * 60 * 1000; // 2 minutos  
+const WARNING_TIME = 5 * 60 * 1000; // 5 minutos antes del timeout  
+  
+function resetInactivityTimer() {  
+    clearTimeout(inactivityTimer);  
+    clearTimeout(warningTimer);  
+      
+    // Timer para mostrar advertencia  
+    warningTimer = setTimeout(showInactivityWarning, TIMEOUT_DURATION - WARNING_TIME);  
+      
+    // Timer para cerrar sesión  
+    inactivityTimer = setTimeout(logoutDueToInactivity, TIMEOUT_DURATION);  
+}  
+  
+function showInactivityWarning() {  
+    Swal.fire({  
+        title: 'Sesión por expirar',  
+        text: 'Tu sesión expirará en 5 minutos por inactividad. ¿Deseas mantener la sesión activa?',  
+        icon: 'warning',  
+        showCancelButton: true,  
+        confirmButtonText: 'Mantener activa',  
+        cancelButtonText: 'Cerrar sesión',  
+        timer: 300000, // 5 minutos  
+        timerProgressBar: true  
+    }).then((result) => {  
+        if (result.isConfirmed) {  
+            renewSession();  
+        } else {  
+            logoutDueToInactivity();  
+        }  
+    });  
+}  
+  
+function logoutDueToInactivity() {  
+    Swal.fire({  
+        title: 'Sesión expirada',  
+        text: 'Tu sesión ha expirado por inactividad',  
+        icon: 'info',  
+        timer: 5000,  
+        showConfirmButton: false  
+    }).then(() => {  
+        window.location.href = '<?=APP_URL;?>/login/logout.php';  
+    });  
+}  
+  
+function renewSession() {  
+    fetch('<?=APP_URL;?>/admin/renew_session.php', {  
+        method: 'POST',  
+        headers: {  
+            'Content-Type': 'application/json',  
+        }  
+    }).then(() => {  
+        resetInactivityTimer();  
+    });  
+}  
+  
+// Eventos para detectar actividad del usuario  
+['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {  
+    document.addEventListener(event, resetInactivityTimer, true);  
+});  
+  
+// Inicializar el timer  
+resetInactivityTimer();  
+</script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <link rel="stylesheet" href="<?=APP_URL;?>public/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -60,7 +166,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="<?=APP_URL;?>/admin" class="nav-link"><?=APP_NAME;?></a>
+        <a href="<?=APP_URL;?>/admin" class="nav-link"><?=APP_NAME;?></a> <?=$rol_sesion_usuario;?>
       </li>
     </ul>
 
@@ -134,6 +240,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
+               <?php
+               if( ($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTORA") || ($rol_sesion_usuario == "SECRETARIA/O") || ($rol_sesion_usuario == "COORDINADORA PEDAGÓGICA")){ ?>
+
                <li class="nav-item">
             <a href="#" class="nav-link active">
             <i class="nav-icon fas"><i class="bi bi-card-list"></i></i>
@@ -169,6 +278,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+          <?php
+               }
+               ?>
+
+          <?php
+               if( ($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTORA") || ($rol_sesion_usuario == "SECRETARIA/O")  || ($rol_sesion_usuario == "COORDINADORA PEDAGÓGICA") || ($rol_sesion_usuario == "DOCENTE")){ ?>
 
           <li class="nav-item">
             <a href="#" class="nav-link active">
@@ -205,7 +320,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+          <?php
+               }
+               ?>
 
+
+          <?php
+               if( ($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTORA")  || ($rol_sesion_usuario == "COORDINADORA PEDAGÓGICA")){ ?>
           <li class="nav-item">
             <a href="#" class="nav-link active">
             <i class="nav-icon fas"><i class="bi bi-bookmarks"></i></i>
@@ -222,8 +343,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
             </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?=APP_URL;?>/admin/roles/permisos.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Permisos</p>
+                </a>
+              </li>
+            </ul>
           </li>
-
           <li class="nav-item">
             <a href="#" class="nav-link active">
             <i class="nav-icon fas"><i class="bi bi-people-fill"></i></i>
@@ -259,8 +387,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+          <?php
+               }
+               ?>
 
-          <li class="nav-item">
+               <?php
+               if( ($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTORA")  || ($rol_sesion_usuario == "COORDINADORA PEDAGÓGICA") || ($rol_sesion_usuario == "SECRETARIA/O") || ($rol_sesion_usuario == "DOCENTE")){ ?>
+               <li class="nav-item">
             <a href="#" class="nav-link active">
             <i class="nav-icon fas"><i class="bi bi-person-lines-fill"></i></i>
               <p>
@@ -277,6 +410,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+          <?php
+               }
+               ?>
+
+          <?php
+               if( ($rol_sesion_usuario == "ADMINISTRADOR") || ($rol_sesion_usuario == "DIRECTORA") || ($rol_sesion_usuario == "SECRETARIA/O") || ($rol_sesion_usuario == "COORDINADORA PEDAGÓGICA")){ ?>     
 
           <li class="nav-item">
             <a href="#" class="nav-link active">
@@ -301,7 +440,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
-          
+          <?php
+               }
+               ?>
 
         </ul>
                 <div class="nav-footer" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 10px; background-color: #343a40;">

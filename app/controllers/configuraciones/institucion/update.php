@@ -50,7 +50,7 @@ if($sentencia->execute()){
     session_start();
     $_SESSION['mensaje'] = "Se actualizó los datos de configuración de manera correcta";
     $_SESSION['icono'] = "success";
-    header('Location:'.APP_URL."/admin/configuraciones/institucion");
+    header('Location:'.APP_URL."/admin/configuraciones/Institucion");
 //header('Location:' .$URL.'/');
 }else{
     //echo 'error al registrar a la base de datos';
